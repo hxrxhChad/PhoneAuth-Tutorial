@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, avoid_unnecessary_containers, unused_local_variable, avoid_print
+// ignore_for_file: unused_import, prefer_const_constructors, prefer_const_literals_to_create_immutables, deprecated_member_use, avoid_unnecessary_containers, unused_local_variable, avoid_print, sized_box_for_whitespace
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -151,8 +151,8 @@ class _LanguagePageState extends State<LanguagePage> {
             //               builder: (context) => const AuthPage(),
             //             ),
             //           );
-            ElevatedButton(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 print("okk");
                 ap.isSignedIn == true
                     ? Navigator.push(
@@ -168,20 +168,18 @@ class _LanguagePageState extends State<LanguagePage> {
                         ),
                       );
               },
-              style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(primaryColor),
-                      minimumSize:
-                          MaterialStatePropertyAll(Size.fromHeight(50)))
-                  .copyWith(
-                      minimumSize: MaterialStatePropertyAll(Size.fromWidth(
-                          MediaQuery.of(context).size.width * 0.8))),
-              child: Center(
-                child: Text(
-                  "NEXT",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6!
-                      .copyWith(color: Colors.white, fontSize: 18),
+              child: Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.5,
+                decoration: BoxDecoration(color: primaryColor),
+                child: Center(
+                  child: Text(
+                    "NEXT",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6!
+                        .copyWith(color: Colors.white, fontSize: 18),
+                  ),
                 ),
               ),
             ),

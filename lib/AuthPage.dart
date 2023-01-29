@@ -1,9 +1,11 @@
-// ignore_for_file: file_names, unused_import, prefer_const_constructors, deprecated_member_use, unnecessary_string_interpolations
+// ignore_for_file: file_names, unused_import, prefer_const_constructors, deprecated_member_use, unnecessary_string_interpolations, unused_local_variable
 
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:phone_auth/Otp.dart';
 import 'package:phone_auth/main.dart';
+import 'package:phone_auth/provider/AuthProvider.dart';
+import 'package:provider/provider.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -43,6 +45,19 @@ class _AuthPageState extends State<AuthPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            IconButton(
+                alignment: Alignment.topRight,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const OtpPage(verificationId: "")));
+                },
+                icon: Icon(
+                  Icons.turn_right_outlined,
+                  color: primaryColor,
+                )),
             Center(
               child: Text(
                 "Please select your mobile number",
@@ -125,12 +140,7 @@ class _AuthPageState extends State<AuthPage> {
               height: defaultPadding,
             ),
             InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const OtpPage()),
-                );
-              },
+              onTap: () => sendPhoneNumber(),
               child: Container(
                 height: 50,
                 width: MediaQuery.of(context).size.width * 0.8,
@@ -151,5 +161,11 @@ class _AuthPageState extends State<AuthPage> {
         ),
       ),
     ));
+  }
+
+  void sendPhoneNumber() {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    String phoneNumber = phoneController.text.trim();
+    ap.signInWithPhone(context, "+${selectedCountry.countryCode}$phoneNumber");
   }
 }

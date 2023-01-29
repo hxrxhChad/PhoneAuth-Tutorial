@@ -3,10 +3,19 @@
 import 'package:flutter/material.dart';
 import 'package:phone_auth/ProfileSelector.dart';
 import 'package:phone_auth/main.dart';
+import 'package:pinput/pin_put/pin_put.dart';
+import 'package:pinput/pin_put/pin_put_state.dart';
 
-class OtpPage extends StatelessWidget {
-  const OtpPage({super.key});
+class OtpPage extends StatefulWidget {
+  final String verificationId;
+  const OtpPage({super.key, required this.verificationId});
 
+  @override
+  State<OtpPage> createState() => _OtpPageState();
+}
+
+class _OtpPageState extends State<OtpPage> {
+  String? otpCode;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,13 +44,40 @@ class OtpPage extends StatelessWidget {
               height: defaultPadding,
             ),
             Text(
-              "Code is sent to +911234567890",
+              "Code is sent to your Phone Number",
               textAlign: TextAlign.center,
               maxLines: 2,
               style: Theme.of(context)
                   .textTheme
                   .subtitle2!
                   .copyWith(color: Colors.black38),
+            ),
+            SizedBox(
+              height: defaultPadding,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+              child: PinPut(
+                  fieldsCount: 6,
+                  onSubmit: (value) {
+                    setState(() {
+                      otpCode = value;
+                    });
+                  },
+                  eachFieldConstraints: BoxConstraints(
+                    minHeight: 50,
+                    minWidth: 50,
+                  ),
+                  withCursor: true,
+                  textStyle: TextStyle(color: Colors.white),
+                  followingFieldDecoration:
+                      BoxDecoration(color: Color.fromARGB(255, 67, 146, 211)),
+                  submittedFieldDecoration:
+                      BoxDecoration(color: Color.fromARGB(255, 67, 146, 211)),
+                  disabledDecoration:
+                      BoxDecoration(color: Color.fromARGB(255, 67, 146, 211)),
+                  selectedFieldDecoration:
+                      BoxDecoration(color: Color.fromARGB(255, 67, 146, 211))),
             ),
             SizedBox(
               height: defaultPadding,
